@@ -1,5 +1,5 @@
 # Full course of django
-This course is udemy courses.
+This course is professional courses.
 Using this tutorial  to  learn django  from  scratch.
 this tutorial  contains many  courses and in every course contains many  commandes to  learn.
 for this course i'm using Pycharm as an IDE

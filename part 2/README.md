@@ -4,7 +4,7 @@ This part include
 - Models
 - Request
 - Model relation
-- Vues
+- views
 - Django template language
 
 ## First course: Model
@@ -126,5 +126,73 @@ models.ManyToManyField(nom_class to reffer)
 >Set : specify one or more relations and overwrite the old ones
 
 
+## Fourth course: Views
 
+**What you have to know**
+- httpresponse and jsonresponse
+- return 404 not found
+- import http404
+- shortened functions
+- redirect
+- restrict access to a view
 
+### htpresponse: give page status
+>an HttpResponse object and modify some of its attributes.
+
+```
+from django.http import HttpResponse
+
+def home(request):
+response = HttpResponse("Hello World")
+response.status_code = 404
+return response
+```
+
+### 404NOTFOUNd
+>you must raise an error with the raise keyword and the Http404 object.
+```
+from django.http import HttpResponse, Http404
+
+def home(request):
+    try:
+        article = Articles.objects.get(pk=5)
+    except:
+        raise Http404("L'article n'existe pas...")
+
+    return HttpResponse(article.content)
+```
+
+### The JsonResponse object
+We could very well return the same thing by creating an instance of HttpResponse and modifying a few attributes, but it is not uncommon (especially when creating an API) to have to return data in JSON format. The JsonResponse class therefore saves time and returns the correct type of data directly.
+
+## fivth course :Django template language
+To insert data into an HTML template file, double braces {{ var_name }} are used. These variables must first be passed to the context parameter of the render function in the view:
+return render(request, 'index.html', context={"user": user})
+
+### Conditional structures
+{% if condition %}
+    <h1>True condition !</h1>
+{% endif %}
+
+### loops
+
+{% for post in blog_posts %}
+    <h1>{{ user.name }}</h1>
+{% endfor %}
+
+### For a URL path without URL parameters
+Here our path in urls.py
+```
+urlpatterns = [
+    path('home/', views.index, name='index'),
+    path('user/<int:Mobile_num>/', views.userpost, name='post')
+]
+```
+In HTML
+```
+<a href="{% url 'index' %}">Accueil</a>
+```
+### For a URL path with URL parameters
+```
+<a href="{% url 'post' Mobile_num=123456 %}">Un super user</a>
+```
